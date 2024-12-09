@@ -28,7 +28,7 @@ async def start_command(client: Client, message: Message):
                 
     text = message.text        
     if len(text)>7:
-        await message.delete()
+        #await message.delete()
 
         try: base64_string = text.split(" ", 1)[1]
         except: return
