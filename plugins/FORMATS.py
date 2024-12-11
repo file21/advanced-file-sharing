@@ -12,7 +12,7 @@ START_MSG = """<b>Hello {mention},
 
 I can store private files in Specified Channel and other users can access it from special link.
 
-Check - @T4TSA</b>"""
+<blockquote>Check - @T4TSA</blockquote></b>"""
 
 SM2 = """<b>⚡ Hᴇʏ, {mention} ~
 
@@ -20,7 +20,7 @@ SM2 = """<b>⚡ Hᴇʏ, {mention} ~
 Tʜᴇ ʙᴇsᴛ ᴘᴀʀᴛ ɪs ɪ ᴀᴍ ᴀʟsᴏ sᴜᴘᴘᴏʀᴛ ʀᴇǫᴜᴇsᴛ ғᴏʀᴄᴇsᴜʙ ғᴇᴀᴛᴜʀᴇ, Tᴏ ᴋɴᴏᴡ ᴅᴇᴛᴀɪʟᴇᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴄʟɪᴄᴋ ᴀʙᴏᴜᴛ ᴍᴇ ʙᴜᴛᴛᴏɴ ᴛᴏ ᴋɴᴏᴡ ᴍʏ ᴀʟʟ ᴀᴅᴠᴀɴᴄᴇ ғᴇᴀᴛᴜʀᴇs</blockquote></b>"""
 
 #Force sub message 
-FORCE_MSG = """<b>Hello {first},
+FORCE_MSG = """<b><blockquote>Hello {first}</blockquote>,
 
 You need to join in my main Channel to use me.
 

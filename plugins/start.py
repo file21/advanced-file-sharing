@@ -12,10 +12,11 @@ from pyrogram.errors import FloodWait
 from plugins.FORMATS import START_MSG, FORCE_MSG
 from pyrogram.enums import ParseMode, ChatAction
 from config import CUSTOM_CAPTION, OWNER_ID, PICS
-from plugins.autoDelete import auto_del_notification, delete_message
+#from plugins.autoDelete import auto_del_notification, delete_message
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from helper_func import banUser, is_userJoin, is_admin, subscribed, encode, decode, get_messages
 
+CHNL_BTN = True
 
 @Bot.on_message(filters.command('start') & filters.private & ~banUser & subscribed)
 async def start_command(client: Client, message: Message): 
@@ -58,56 +59,58 @@ async def start_command(client: Client, message: Message):
             try: ids = [int(int(argument[1]) / abs(client.db_channel.id))]
             except: return
                     
-        last_message = None
+        #last_message = None
         await message.reply_chat_action(ChatAction.UPLOAD_DOCUMENT)  
         
         try: messages = await get_messages(client, ids)
         except: return await message.reply("<b><i>Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ..!</i></b>")
             
-        AUTO_DEL, DEL_TIMER, HIDE_CAPTION, CHNL_BTN, PROTECT_MODE = await asyncio.gather(kingdb.get_auto_delete(), kingdb.get_del_timer(), kingdb.get_hide_caption(), kingdb.get_channel_button(), kingdb.get_protect_content())   
-        if CHNL_BTN: button_name, button_link = await kingdb.get_channel_button_link()
+        #AUTO_DEL, DEL_TIMER, HIDE_CAPTION, CHNL_BTN, PROTECT_MODE = await asyncio.gather(kingdb.get_auto_delete(), kingdb.get_del_timer(), kingdb.get_hide_caption(), kingdb.get_channel_button(), kingdb.get_protect_content())   
+        #if CHNL_BTN: button_name, button_link = await kingdb.get_channel_button_link()
+
             
         for idx, msg in enumerate(messages):
             if bool(CUSTOM_CAPTION) & bool(msg.document):
                 caption = CUSTOM_CAPTION.format(previouscaption = "" if not msg.caption else msg.caption.html, filename = msg.document.file_name)
 
-            elif HIDE_CAPTION and (msg.document or msg.audio):
-                caption = ""
+            #elif HIDE_CAPTION and (msg.document or msg.audio):
+                #caption = ""
 
             else:
                 caption = "" if not msg.caption else msg.caption.html
 
             if CHNL_BTN:
-                reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text=button_name, url=button_link)]]) if msg.document or msg.photo or msg.video or msg.audio else None
+                reply_markup = None
+                #reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text=button_name, url=button_link)]]) if msg.document or msg.photo or msg.video or msg.audio else None
             else:
                 reply_markup = msg.reply_markup   
                     
             try:
-                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_MODE)
+                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
                 await asyncio.sleep(0.1)
 
-                if AUTO_DEL:
-                    asyncio.create_task(delete_message(copied_msg, DEL_TIMER))
-                    if idx == len(messages) - 1: last_message = copied_msg
+                #if AUTO_DEL:
+                    #asyncio.create_task(delete_message(copied_msg, DEL_TIMER))
+                    #if idx == len(messages) - 1: last_message = copied_msg
 
             except FloodWait as e:
                 await asyncio.sleep(e.x)
-                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_MODE)
+                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
                 await asyncio.sleep(0.1)
                 
-                if AUTO_DEL:
-                    asyncio.create_task(delete_message(copied_msg, DEL_TIMER))
-                    if idx == len(messages) - 1: last_message = copied_msg
+                #if AUTO_DEL:
+                    #asyncio.create_task(delete_message(copied_msg, DEL_TIMER))
+                    #if idx == len(messages) - 1: last_message = copied_msg
                         
-        if AUTO_DEL and last_message:
-                asyncio.create_task(auto_del_notification(client.username, last_message, DEL_TIMER, message.command[1]))
+        #if AUTO_DEL and last_message:
+                #asyncio.create_task(auto_del_notification(client.username, last_message, DEL_TIMER, message.command[1]))
                         
     else:   
-        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('🤖 Aʙᴏᴜᴛ ᴍᴇ', callback_data= 'about'), InlineKeyboardButton('Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]])
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('🤖 Aʙᴏᴜᴛ ᴍᴇ', callback_data= 'about'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]])
 
-        await message.reply_photo(
-            photo = random.choice(PICS),
-            caption = START_MSG.format(
+        await message.reply(
+            #photo = random.choice(PICS),
+            text = START_MSG.format(
                 first = message.from_user.first_name,
                 last = message.from_user.last_name,
                 username = None if not message.from_user.username else '@' + message.from_user.username,
@@ -117,8 +120,8 @@ async def start_command(client: Client, message: Message):
             reply_markup = reply_markup,
 	        message_effect_id=5104841245755180586 #🔥
         )
-        try: await message.delete()
-        except: pass
+        #try: await message.delete()
+        #except: pass
 
    
 ##===================================================================================================================##
@@ -196,8 +199,8 @@ async def not_joined(client: Client, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
         )
                 
-        try: await message.delete()
-        except: pass
+        #try: await message.delete()
+        #except: pass
                         
     except Exception as e:
         print(f"Unable to perform forcesub buttons reason : {e}")
