@@ -81,17 +81,14 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         user = await client.get_users(OWNER_ID)
         user_link = f"https://t.me/{user.username}" if user.username else f"tg://openmessage?user_id={OWNER_ID}" 
         ownername = f"<a href={user_link}>{user.first_name}</a>" if user.first_name else f"<a href={user_link}>no name !</a>"
-        await query.edit_message_media(
-            InputMediaPhoto("https://telegra.ph/file/ff8fbe7d67a3c7492c353.jpg", 
-                            ABOUT_TXT.format(
-                                botname = client.name,
-                                ownername = ownername, 
-                            )
-            ),
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('🔒Close', callback_data='close')]
-            ]),
-        )
+        about_text = ABOUT_TXT
+        await query.edit_message_text(
+        text=about_text,
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('🔒Close', callback_data='close')]
+        ]),
+        parse_mode=enums.ParseMode.HTML
+    )
         
     elif data == "setting":
         await query.edit_message_media(InputMediaPhoto(random.choice(PICS), "<b>Pʟᴇᴀsᴇ wᴀɪᴛ !\n\n<i>🔄 Rᴇᴛʀɪᴇᴠɪɴɢ ᴀʟʟ Sᴇᴛᴛɪɴɢs...</i></b>"))
