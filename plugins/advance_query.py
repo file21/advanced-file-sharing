@@ -4,6 +4,7 @@ import random
 from bot import Bot
 from plugins.FORMATS import *
 from config import OWNER_ID, PICS
+from pyrogram import enums
 from pyrogram.enums import ChatAction
 from plugins.autoDelete import convert_time
 from database.database import kingdb
