@@ -172,7 +172,7 @@ async def not_joined(client: Client, message: Message):
                         link = data.invite_link
 
                     # Add button for the chat
-                    buttons.append([InlineKeyboardButton(text=f"(Join, {cname}"), url=link)])
+                    buttons.append([InlineKeyboardButton(text=f"Join {cname}", url=link)])
                     count += 1
                     await temp.edit(f"<b>{'! ' * count}</b>")
                                                             
