@@ -92,7 +92,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
     )
         
     elif data == "setting":
-        await query.edit_message_media(InputMediaPhoto(random.choice(PICS), "<b>Pʟᴇᴀsᴇ wᴀɪᴛ !\n\n<i>🔄 Rᴇᴛʀɪᴇᴠɪɴɢ ᴀʟʟ Sᴇᴛᴛɪɴɢs...</i></b>"))
+        await query.edit_message_text("<b>Pʟᴇᴀsᴇ wᴀɪᴛ !\n\n<i>🔄 Rᴇᴛʀɪᴇᴠɪɴɢ ᴀʟʟ Sᴇᴛᴛɪɴɢs...</i></b>")
         try:
             total_fsub = len(await kingdb.get_all_channels())
             total_admin = len(await kingdb.get_all_admins())
@@ -102,10 +102,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             hide_caption = 'Eɴᴀʙʟᴇᴅ' if await kingdb.get_hide_caption() else 'Dɪsᴀʙʟᴇᴅ'
             chnl_butn = 'Eɴᴀʙʟᴇᴅ' if await kingdb.get_channel_button() else 'Dɪsᴀʙʟᴇᴅ'
             reqfsub = 'Eɴᴀʙʟᴇᴅ' if await kingdb.get_request_forcesub() else 'Dɪsᴀʙʟᴇᴅ'
-            
-            await query.edit_message_media(
-                InputMediaPhoto(random.choice(PICS),
-                                SETTING_TXT.format(
+            settings_txt = SETTING_TXT.format(
                                     total_fsub = total_fsub,
                                     total_admin = total_admin,
                                     total_ban = total_ban,
@@ -115,28 +112,30 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                                     chnl_butn = chnl_butn,
                                     reqfsub = reqfsub
                                 )
-                ),
+            await query.edit_message_text(
+                text=settings_txt,
                 reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('🔒Close', callback_data='close')]
                 ]),
+                parse_mode=enums.ParseMode.HTML
             )
         except Exception as e:
             print(f"! Error Occured on callback data = 'setting' : {e}")
         
     elif data == "start":
-        await query.edit_message_media(
-            InputMediaPhoto(random.choice(PICS), 
-                            START_MSG.format(
+        start_txt=START_MSG.format(
                                 first = query.from_user.first_name,
                                 last = query.from_user.last_name,
                                 username = None if not query.from_user.username else '@' + query.from_user.username,
                                 mention = query.from_user.mention,
                                 id = query.from_user.id
                             )
-            ),
+        await query.edit_message_text(
+            text=start_txt,
             reply_markup = InlineKeyboardMarkup([
                 [InlineKeyboardButton('😊 About Me', callback_data='about'), InlineKeyboardButton('Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]
             ]),
+            parse_mode=enums.ParseMode.HTML
         )
         
     elif data == "files_cmd":
