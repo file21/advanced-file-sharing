@@ -20,7 +20,7 @@ SM2 = """<b>⚡ Hᴇʏ, {mention} ~
 Tʜᴇ ʙᴇsᴛ ᴘᴀʀᴛ ɪs ɪ ᴀᴍ ᴀʟsᴏ sᴜᴘᴘᴏʀᴛ ʀᴇǫᴜᴇsᴛ ғᴏʀᴄᴇsᴜʙ ғᴇᴀᴛᴜʀᴇ, Tᴏ ᴋɴᴏᴡ ᴅᴇᴛᴀɪʟᴇᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴄʟɪᴄᴋ ᴀʙᴏᴜᴛ ᴍᴇ ʙᴜᴛᴛᴏɴ ᴛᴏ ᴋɴᴏᴡ ᴍʏ ᴀʟʟ ᴀᴅᴠᴀɴᴄᴇ ғᴇᴀᴛᴜʀᴇs</blockquote></b>"""
 
 #Force sub message 
-FORCE_MSG = """<b><blockquote>Hello {first}</blockquote>,
+FORCE_MSG = """<b>Hello {first},
 
 You need to join in my main Channel to use me.
 
@@ -58,7 +58,7 @@ HELP_TEXT = """<b>⁉️ Hᴇʟʟᴏ {mention} ~
 
 ABOUT_TXT = """○ Creator: OBE
 ○ Language: Python3
-○ Library: Pyrogram 2.1.30 (https://docs.pyrogram.org/)
+○ Library: Pyrogram 2.1.30
 ○ Channel - @T4TSA"""
 
 SETTING_TXT = """<b>⚙️ Cᴏɴғɪɢᴜʀᴀᴛɪᴏɴs</b>
