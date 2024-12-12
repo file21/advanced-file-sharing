@@ -128,7 +128,7 @@ async def send_text(client: Bot, message: Message):
 
 @Bot.on_message(filters.command('status') & filters.private & is_admin)
 async def info(client: Bot, message: Message):   
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
     
     start_time = time.time()
     temp_msg = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)  # Temporary message
@@ -147,7 +147,7 @@ async def info(client: Bot, message: Message):
 
 @Bot.on_message(filters.command('cmd') & filters.private & is_admin)
 async def bcmd(bot: Bot, message: Message):        
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data = "close")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
     await message.reply(text=CMD_TXT, reply_markup = reply_markup, quote= True)
     
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#    
@@ -156,13 +156,13 @@ async def bcmd(bot: Bot, message: Message):
 
 @Bot.on_message(filters.command('forcesub') & filters.private & ~banUser)
 async def fsub_commands(client: Client, message: Message):
-    button = [[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]]
+    button = [[InlineKeyboardButton("🔒Close", callback_data="close")]]
     await message.reply(text=FSUB_CMD_TXT, reply_markup=InlineKeyboardMarkup(button), quote=True)
 
 
 @Bot.on_message(filters.command('users') & filters.private & ~banUser)
 async def user_setting_commands(client: Client, message: Message):
-    button = [[InlineKeyboardButton("Cʟᴏsᴇ ✖️", callback_data="close")]]
+    button = [[InlineKeyboardButton("🔒Close", callback_data="close")]]
     await message.reply(text=USER_CMD_TXT, reply_markup=InlineKeyboardMarkup(button), quote=True)
 
     

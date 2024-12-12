@@ -49,7 +49,7 @@ def buttonStatus(pc_data: str, hc_data: str, cb_data: str) -> list:
         ],
         [
             InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='files_cmd'), 
-            InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')
+            InlineKeyboardButton('🔒Close', callback_data='close')
         ],
     ]
     return button
@@ -89,7 +89,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                             )
             ),
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
+                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('🔒Close', callback_data='close')]
             ]),
         )
         
@@ -119,7 +119,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                                 )
                 ),
                 reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
+                [InlineKeyboardButton('⬅️ Bᴀᴄᴋ', callback_data='start'), InlineKeyboardButton('🔒Close', callback_data='close')]
                 ]),
             )
         except Exception as e:
@@ -137,7 +137,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                             )
             ),
             reply_markup = InlineKeyboardMarkup([
-                [InlineKeyboardButton('🤖 Aʙᴏᴜᴛ ᴍᴇ', callback_data='about'), InlineKeyboardButton('Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]
+                [InlineKeyboardButton('😊 About Me', callback_data='about'), InlineKeyboardButton('Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]
             ]),
         )
         
@@ -288,7 +288,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     ),
                     reply_markup = InlineKeyboardMarkup([
                         [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton('◈ Sᴇᴛ Tɪᴍᴇʀ ⏱', callback_data='set_timer')],
-                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
+                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton('🔒Close', callback_data='close')]
                     ])
                 )
             except Exception as e:
@@ -311,7 +311,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                     ),
                     reply_markup = InlineKeyboardMarkup([
                         [InlineKeyboardButton(mode, callback_data='chng_autodel'), InlineKeyboardButton('◈ Sᴇᴛ Tɪᴍᴇʀ ⏱', callback_data='set_timer')],
-                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton('Cʟᴏsᴇ ✖️', callback_data='close')]
+                        [InlineKeyboardButton('🔄 Rᴇғʀᴇsʜ', callback_data='autodel_cmd'), InlineKeyboardButton('🔒Close', callback_data='close')]
                     ])
                 )
             except Exception as e:
@@ -399,7 +399,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 buttons = [
                     [InlineKeyboardButton("ᴄʟᴇᴀʀ ᴜsᴇʀs", "clear_users"), InlineKeyboardButton("cʟᴇᴀʀ cʜᴀɴɴᴇʟs", "clear_chnls")],
                     [InlineKeyboardButton("♻️  Rᴇғʀᴇsʜ Sᴛᴀᴛᴜs  ♻️", "more_settings")],
-                    [InlineKeyboardButton("⬅️ Bᴀᴄᴋ", "req_fsub"), InlineKeyboardButton("Cʟᴏsᴇ ✖️", "close")]
+                    [InlineKeyboardButton("⬅️ Bᴀᴄᴋ", "req_fsub"), InlineKeyboardButton("🔒Close", "close")]
                 ]
                 await query.message.reply_chat_action(ChatAction.CANCEL)
                 await query.message.edit_text(text=RFSUB_MS_TXT.format(reqfsub_list=LISTS.strip()), reply_markup=InlineKeyboardMarkup(buttons))
