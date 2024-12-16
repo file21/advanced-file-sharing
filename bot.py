@@ -8,6 +8,7 @@ import pyromod.listen
 from pyrogram import Client
 from pyrogram.enums import ParseMode
 import sys
+from database.database import kingdb
 from datetime import datetime
 
 from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, CHANNEL_ID, PORT, OWNER_ID
@@ -32,6 +33,8 @@ class Bot(Client):
         self.name = bot_info.first_name
         self.username = bot_info.username
         self.uptime = datetime.now()
+        
+        await self.update_adsdata()
                 
         try:
             db_channel = await self.get_chat(CHANNEL_ID)
@@ -62,6 +65,9 @@ class Bot(Client):
 
         try: await self.send_message(OWNER_ID, text = f"<b><blockquote>🤖 Bᴏᴛ Rᴇsᴛᴀʀᴛᴇᴅ ♻️</blockquote></b>")
         except: pass
+
+    async def update_adsdata(self):
+        self.textads = await kingdb.adsinfo(gett=True)
 
     async def stop(self, *args):
         await super().stop()
