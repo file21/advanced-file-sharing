@@ -611,7 +611,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 [InlineKeyboardButton("🔄 Refresh", "ads_info"), InlineKeyboardButton("Close 🔒", "close")]
             ])
 
-            textads = (client.textads).html if client.textads else "<b>None</b>"
+            textads = client.textads if client.textads else "<b>None</b>"
             
             await query.message.reply(ADSINFO_TXT.format(textads), reply_markup=reply_markup,disable_web_page_preview=True)
 
@@ -620,7 +620,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
     elif data == "add_ads":
         user_id = query.from_user.id
-        
+
         try:
             if await authoUser(query, user_id, owner_only=True) :
 

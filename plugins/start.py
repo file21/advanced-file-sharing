@@ -107,7 +107,7 @@ async def start_command(client: Client, message: Message):
 
         textads = client.textads
         if (len(messages) > 1) and textads:
-            await message.reply(text=textads.html, disable_web_page_preview=True)
+            await message.reply(text=textads, disable_web_page_preview=True)
                         
     else:   
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('😊 About Me', callback_data= 'about'), InlineKeyboardButton('🔒Close', callback_data='close')]])
