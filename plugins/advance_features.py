@@ -457,5 +457,20 @@ async def handle_reqFsub(client: Client, message: Message):
 
 
 @Bot.on_message(filters.command('ads') & filters.private & is_admin)
-async def manage_ads(client: Client, message: Message):pass
+async def manage_ads(client: Client, message: Message):
+    await message.reply_chat_action(ChatAction.TYPING)
+
+    try:
+        reply_markup = InlineKeyboardMarkup([
+            [InlineKeyboardButton("ADD ADS", "add_ads"), InlineKeyboardButton("DELETE ADS", "del_ads")],
+            [InlineKeyboardButton("🔄 Refresh", "ads_info"), InlineKeyboardButton("Close 🔒", "close")]
+        ])
+
+        textads = (client.textads).html if client.textads else "<b>None</b>"
+        
+        await message.reply(ADSINFO_TXT.format(textads), reply_markup=reply_markup,disable_web_page_preview=True, quote=True)
+
+    except Exception as e:
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
+        await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)
 
