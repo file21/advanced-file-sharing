@@ -1,7 +1,7 @@
 # +++ Made By King [telegram username: @Shidoteshika1] +++
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from bot import Bot
 from helper_func import encode, get_message_id, is_admin
 
@@ -20,7 +20,7 @@ async def verify_cancel(message:Message):
     text_msg = message.text
 
     if text_msg and text_msg == "CANCEL":
-        await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...")
+        await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...", reply_markup=ReplyKeyboardRemove())
         await message.delete()
         return True
     
