@@ -603,7 +603,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             print(f"! Error Occured on callback data = 'chng_req' : {e}")
 
     elif data == "ads_info":
-        await query.message.reply("<b><i>🔄 Refreshing Data...</i></b>")
+        await query.message.edit("<b><i>🔄 Refreshing Data...</i></b>")
 
         try:
             reply_markup = InlineKeyboardMarkup([
@@ -613,7 +613,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
             textads = client.textads if client.textads else "<b>None</b>"
             
-            await query.message.reply(ADSINFO_TXT.format(textads), reply_markup=reply_markup,disable_web_page_preview=True)
+            await query.message.edit(ADSINFO_TXT.format(textads), reply_markup=reply_markup,disable_web_page_preview=True)
 
         except Exception as e:
             print(f"Exception in callback data ({data}): {e}")

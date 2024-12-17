@@ -7,7 +7,7 @@ off_pic = "https://telegra.ph/file/0d9e590f62b63b51d4bf9.jpg"
 files_cmd_pic = "https://telegra.ph/file/d44f46054250a73053614.jpg"
 autodel_cmd_pic = "https://telegra.ph/file/a64533814021b40057ccd.jpg"
 
-ADSINFO_TXT = "<b>🤖 𝗔𝗗𝗦 𝗦𝗘𝗧𝗧𝗜𝗡𝗚𝗦 ⚙️\n○ <u>CURRENT ADS</u> :</b>\n{}"
+ADSINFO_TXT = "<b>🤖 𝗔𝗗𝗦 𝗦𝗘𝗧𝗧𝗜𝗡𝗚𝗦 ⚙️\n\n○ <u>CURRENT ADS</u> :</b>\n\n{}"
 
 #start message
 START_MSG = """<b>Hello {mention},
