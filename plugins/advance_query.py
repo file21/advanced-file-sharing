@@ -143,7 +143,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         await query.edit_message_text(
             text=start_txt,
             reply_markup = InlineKeyboardMarkup([
-                [InlineKeyboardButton('😊 About Me', callback_data='about'), InlineKeyboardButton('Sᴇᴛᴛɪɴɢs ⚙️', callback_data='setting')]
+                [InlineKeyboardButton('😊 About Me', callback_data='about'), InlineKeyboardButton('🔒Close', callback_data='close')]
             ]),
             parse_mode=enums.ParseMode.HTML
         )
