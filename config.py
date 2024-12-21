@@ -16,7 +16,7 @@ APP_ID = int(os.environ.get("APP_ID", "22165209"))
 API_HASH = os.environ.get("API_HASH", "f8cfd997b8d868ad6442141be56629a7")
 
 #Your db channel Id --⚠️ REQUIRED--
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001989382228"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "CHANNELNNN"))
 
 #OWNER ID --⚠️ REQUIRED--
 OWNER_ID = int(os.environ.get("OWNER_ID", "7720951169"))
@@ -30,7 +30,7 @@ PORT = os.environ.get("PORT", "PORTNNN")
 #Database --⚠️ REQUIRED--
 DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://t4tsa:qJxfq76UNhEaPyEP@cluster0.dbvtt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
-DB_NAME = os.environ.get("DATABASE_NAME", "IrisFileStore510Bot")
+DB_NAME = os.environ.get("DATABASE_NAME", "DBCHANNENNN")
 
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "50"))
 
