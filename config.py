@@ -19,7 +19,7 @@ API_HASH = os.environ.get("API_HASH", "f8cfd997b8d868ad6442141be56629a7")
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "CHANNELNNN"))
 
 #OWNER ID --⚠️ REQUIRED--
-OWNER_ID = int(os.environ.get("OWNER_ID", "7720951169"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "730412993"))
 
 #SUPPORT_GROUP: This is used for normal users for getting help if they don't understand how to use the bot --⚠ OPTIONAL--
 SUPPORT_GROUP = os.environ.get("SUPPORT_GROUP", "")
