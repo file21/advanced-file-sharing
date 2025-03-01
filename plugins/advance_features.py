@@ -13,7 +13,7 @@ from database.database import kingdb
 
 
 #Advance commands for adding force sub....
-@Bot.on_message(filters.command('add_fsub') & filters.private & filters.user(OWNER_ID))
+@Bot.on_message(filters.command('add_fsub') & filters.private & is_admin)
 async def add_forcesub(client:Client, message:Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     check=0
@@ -67,7 +67,7 @@ async def add_forcesub(client:Client, message:Message):
         await pro.edit(f'<b>❌ Eʀʀᴏʀ ᴏᴄᴄᴜʀᴇᴅ ᴡʜɪʟᴇ Aᴅᴅɪɴɢ Fᴏʀᴄᴇ-Sᴜʙ Cʜᴀɴɴᴇʟs</b>\n\n{channel_list.strip()}\n\n<b><i>Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ...</i></b>', reply_markup=reply_markup, disable_web_page_preview = True)
 
 
-@Bot.on_message(filters.command('del_fsub') & filters.private & filters.user(OWNER_ID))
+@Bot.on_message(filters.command('del_fsub') & filters.private & is_admin)
 async def delete_all_forcesub(client:Client, message:Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     channels = await kingdb.get_all_channels()
