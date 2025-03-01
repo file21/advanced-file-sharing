@@ -203,7 +203,7 @@ async def not_joined(client: Client, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
         )
         
-        await message.reply("<b>Need help here? Watch ↙️\nhttps://t.me/CC0FAQ/41</b>", disable_web_page_preview=True)
+        #await message.reply("<b>Need help here? Watch ↙️\nhttps://t.me/CC0FAQ/41</b>", disable_web_page_preview=True)
                 
         #try: await message.delete()
         #except: pass

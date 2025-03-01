@@ -6,57 +6,25 @@ from pyrogram.enums import ParseMode, ChatAction
 from helper_func import is_admin, banUser
 from plugins.FORMATS import *
 from plugins.autoDelete import convert_time
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from config import OWNER_ID
 from pyrogram import Client, filters
-from database.database import kingdb
-
- 
+from database.database import kingdb 
 
 
 #Advance commands for adding force sub....
-@Bot.on_message(filters.command('add_fsub') & filters.private & is_admin)
+@Bot.on_message(filters.command('add_fsub') & filters.private & filters.user(OWNER_ID))
 async def add_forcesub(client:Client, message:Message):
+    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
+    check=0
+    channel_ids = await kingdb.get_all_channels()
     fsubs = message.text.split()[1:]
 
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
     
     if not fsubs:
-        #message.forward_from_chat.id
-        tmp_msg = await message.reply(
-            "<b><i>Forward message from Channel/Group (including forward tag) to set Forcesub</i></b>", 
-            reply_markup=ReplyKeyboardMarkup(
-                [['CANCEL']], 
-                one_time_keyboard=True, 
-                resize_keyboard=True
-            )
-        )
-        
-        msg = await client.listen(chat_id = message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)))
-        
-        isForwarded = msg.forward_from_chat
-        
-        if isForwarded:
-            await tmp_msg.delete()
-            await msg.delete()
-            
-            fsubs = [isForwarded.id]
-        
-        elif msg.text == "CANCEL":
-            await tmp_msg.delete()
-            await msg.delete()
-            
-            return await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...", reply_markup=reply_markup)
-        
-        else:
-            await tmp_msg.delete()
-            await msg.delete()
-            
-            return await message.reply("<b>Invalid Selection</b>\n\n<blockquote expandable><i>Forward message from Channel/Group or Send CANCEL for cancelling the operation</i></blockquote>", reply_markup=reply_markup)
-    
-    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
-    check=0
-    channel_ids = await kingdb.get_all_channels()
+        await pro.edit("<b>Yᴏᴜ ɴᴇᴇᴅ ᴛᴏ Aᴅᴅ ᴄʜᴀɴɴᴇʟ ɪᴅs\n<blockquote><u>EXAMPLE</u> :\n/add_fsub [channel_ids] :</b> ʏᴏᴜ ᴄᴀɴ ᴀᴅᴅ ᴏɴᴇ ᴏʀ ᴍᴜʟᴛɪᴘʟᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴀᴛ ᴀ ᴛɪᴍᴇ.</blockquote>", reply_markup=reply_markup)
+        return
 
     channel_list = ""
     for id in fsubs:
@@ -99,7 +67,7 @@ async def add_forcesub(client:Client, message:Message):
         await pro.edit(f'<b>❌ Eʀʀᴏʀ ᴏᴄᴄᴜʀᴇᴅ ᴡʜɪʟᴇ Aᴅᴅɪɴɢ Fᴏʀᴄᴇ-Sᴜʙ Cʜᴀɴɴᴇʟs</b>\n\n{channel_list.strip()}\n\n<b><i>Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ...</i></b>', reply_markup=reply_markup, disable_web_page_preview = True)
 
 
-@Bot.on_message(filters.command('del_fsub') & filters.private & is_admin)
+@Bot.on_message(filters.command('del_fsub') & filters.private & filters.user(OWNER_ID))
 async def delete_all_forcesub(client:Client, message:Message):
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     channels = await kingdb.get_all_channels()
@@ -505,4 +473,3 @@ async def manage_ads(client: Client, message: Message):
     except Exception as e:
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
         await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)
-
