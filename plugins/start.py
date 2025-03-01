@@ -127,7 +127,7 @@ async def start_command(client: Client, message: Message):
         #try: await message.delete()
         #except: pass
 
-   
+
 ##===================================================================================================================##
 
 #TRIGGRED START MESSAGE FOR HANDLE FORCE SUB MESSAGE AND FORCE SUB CHANNEL IF A USER NOT JOINED A CHANNEL
