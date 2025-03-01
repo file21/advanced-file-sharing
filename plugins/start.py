@@ -143,7 +143,7 @@ async def not_joined(client: Client, message: Message):
     temp = await message.reply(f"<b>??</b>")
     
     user_id = message.from_user.id
-               
+
     REQFSUB = await kingdb.get_request_forcesub()
     buttons = []
     count = 0
