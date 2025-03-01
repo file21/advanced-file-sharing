@@ -6,25 +6,57 @@ from pyrogram.enums import ParseMode, ChatAction
 from helper_func import is_admin, banUser
 from plugins.FORMATS import *
 from plugins.autoDelete import convert_time
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from config import OWNER_ID
 from pyrogram import Client, filters
-from database.database import kingdb 
+from database.database import kingdb
+
+ 
 
 
 #Advance commands for adding force sub....
 @Bot.on_message(filters.command('add_fsub') & filters.private & is_admin)
 async def add_forcesub(client:Client, message:Message):
-    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
-    check=0
-    channel_ids = await kingdb.get_all_channels()
     fsubs = message.text.split()[1:]
 
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
     
     if not fsubs:
-        await pro.edit("<b>Yᴏᴜ ɴᴇᴇᴅ ᴛᴏ Aᴅᴅ ᴄʜᴀɴɴᴇʟ ɪᴅs\n<blockquote><u>EXAMPLE</u> :\n/add_fsub [channel_ids] :</b> ʏᴏᴜ ᴄᴀɴ ᴀᴅᴅ ᴏɴᴇ ᴏʀ ᴍᴜʟᴛɪᴘʟᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴀᴛ ᴀ ᴛɪᴍᴇ.</blockquote>", reply_markup=reply_markup)
-        return
+        #message.forward_from_chat.id
+        tmp_msg = await message.reply(
+            "<b><i>Forward message from Channel/Group (including forward tag) to set Forcesub</i></b>", 
+            reply_markup=ReplyKeyboardMarkup(
+                [['CANCEL']], 
+                one_time_keyboard=True, 
+                resize_keyboard=True
+            )
+        )
+        
+        msg = await client.listen(chat_id = message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)))
+        
+        isForwarded = msg.forward_from_chat
+        
+        if isForwarded:
+            await tmp_msg.delete()
+            await msg.delete()
+            
+            fsubs = [isForwarded.id]
+        
+        elif msg.text == "CANCEL":
+            await tmp_msg.delete()
+            await msg.delete()
+            
+            return await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...", reply_markup=reply_markup)
+        
+        else:
+            await tmp_msg.delete()
+            await msg.delete()
+            
+            return await message.reply("<b>Invalid Selection</b>\n\n<blockquote expandable><i>Forward message from Channel/Group or Send CANCEL for cancelling the operation</i></blockquote>", reply_markup=reply_markup)
+    
+    pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
+    check=0
+    channel_ids = await kingdb.get_all_channels()
 
     channel_list = ""
     for id in fsubs:
