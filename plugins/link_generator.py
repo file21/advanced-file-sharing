@@ -6,7 +6,7 @@ from bot import Bot
 from helper_func import encode, get_message_id, is_admin
 
 async def cancelkeyMarkup(message: Message, text:str):
-    await message.reply(
+    return await message.reply(
         text=text,
         disable_web_page_preview=True,
         reply_markup=ReplyKeyboardMarkup(
@@ -30,9 +30,12 @@ async def verify_cancel(message:Message):
 @Bot.on_message(filters.command('batch') & filters.private & is_admin)
 async def batch(client: Client, message: Message):
     channel = f"<a href={client.db_channel.invite_link}>ᴅʙ ᴄʜᴀɴɴᴇʟ</a>" 
+    
+    tmp_err = None
+    
     while True:
         try:
-            await cancelkeyMarkup(
+            tmp_msg = await cancelkeyMarkup(
                 message, 
                 text=f"<b><blockquote>Fᴏʀᴡᴀʀᴅ ᴛʜᴇ Fɪʀsᴛ Mᴇssᴀɢᴇ ғʀᴏᴍ {channel} (ᴡɪᴛʜ ǫᴜᴏᴛᴇs)..</blockquote>\n<blockquote>Oʀ Sᴇɴᴅ ᴛʜᴇ {channel} Pᴏsᴛ Lɪɴᴋ</blockquote></b>"
             )
@@ -43,19 +46,38 @@ async def batch(client: Client, message: Message):
             return
         
         if await verify_cancel(first_message):
+            if tmp_err: 
+                await tmp_err.delete()
+                tmp_err = None
+            
+            await tmp_msg.delete()
+            
             return
 
         f_msg_id = await get_message_id(client, first_message)
 
         if f_msg_id:
+            if tmp_err: 
+                await tmp_err.delete()
+                tmp_err = None
+            
+            await tmp_msg.delete()
+            
             break
+        
         else:
-            await first_message.reply(f"<b>❌ Eʀʀᴏʀ..\n<blockquote>Tʜɪs Fᴏʀᴡᴀʀᴅᴇᴅ ᴘᴏsᴛ ᴏʀ ᴍᴇssᴀɢᴇ ʟɪɴᴋ ɪs ɴᴏᴛ ғʀᴏᴍ ᴍʏ {channel}</blockquote></b>", quote = True, disable_web_page_preview=True)
+            if tmp_err: 
+                await tmp_err.delete()
+
+            tmp_err = await first_message.reply(f"<b>❌ Eʀʀᴏʀ..\n<blockquote>Tʜɪs Fᴏʀᴡᴀʀᴅᴇᴅ ᴘᴏsᴛ ᴏʀ ᴍᴇssᴀɢᴇ ʟɪɴᴋ ɪs ɴᴏᴛ ғʀᴏᴍ ᴍʏ {channel}</blockquote></b>", quote = True, disable_web_page_preview=True)
+            
+            await tmp_msg.delete()
+            
             continue
 
     while True:
         try:
-            await cancelkeyMarkup(
+            tmp_msg = await cancelkeyMarkup(
                 message, 
                 text=f"<b><blockquote>Fᴏʀᴡᴀʀᴅ ᴛʜᴇ Lᴀsᴛ Mᴇssᴀɢᴇ ғʀᴏᴍ {channel} (ᴡɪᴛʜ ǫᴜᴏᴛᴇs)..</blockquote>\n<blockquote>Oʀ Sᴇɴᴅ ᴛʜᴇ {channel} Pᴏsᴛ Lɪɴᴋ</blockquote></b>"
             )
@@ -65,13 +87,31 @@ async def batch(client: Client, message: Message):
             return
         
         if await verify_cancel(second_message):
+            if tmp_err: 
+                await tmp_err.delete()
+                tmp_err = None
+            
+            await tmp_msg.delete()
+            
             return
         
         s_msg_id = await get_message_id(client, second_message)
         if s_msg_id:
+            if tmp_err: 
+                await tmp_err.delete()
+                tmp_err = None
+            
+            await tmp_msg.delete()
+            
             break
         else:
-            await second_message.reply(f"<b>❌ Eʀʀᴏʀ..\n<blockquote>Tʜɪs Fᴏʀᴡᴀʀᴅᴇᴅ ᴘᴏsᴛ ᴏʀ ᴍᴇssᴀɢᴇ ʟɪɴᴋ ɪs ɴᴏᴛ ғʀᴏᴍ ᴍʏ {channel}</blockquote></b>", quote=True, reply_markup=reply_markup, disable_web_page_preview=True)
+            if tmp_err: 
+                await tmp_err.delete()
+                
+            tmp_err = await second_message.reply(f"<b>❌ Eʀʀᴏʀ..\n<blockquote>Tʜɪs Fᴏʀᴡᴀʀᴅᴇᴅ ᴘᴏsᴛ ᴏʀ ᴍᴇssᴀɢᴇ ʟɪɴᴋ ɪs ɴᴏᴛ ғʀᴏᴍ ᴍʏ {channel}</blockquote></b>", quote=True, reply_markup=reply_markup, disable_web_page_preview=True)
+            
+            await tmp_msg.delete()
+            
             continue
 
 

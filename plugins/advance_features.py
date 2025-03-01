@@ -46,13 +46,13 @@ async def add_forcesub(client:Client, message:Message):
             await tmp_msg.delete()
             await msg.delete()
             
-            return await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...", reply_markup=reply_markup)
+            return await message.reply("❌ Cᴀɴᴄᴇʟʟᴇᴅ...", quote=True, reply_markup=reply_markup)
         
         else:
             await tmp_msg.delete()
             await msg.delete()
             
-            return await message.reply("<b>Invalid Selection</b>\n\n<blockquote expandable><i>Forward message from Channel/Group or Send CANCEL for cancelling the operation</i></blockquote>", reply_markup=reply_markup)
+            return await message.reply("<b>Invalid Selection</b>\n\n<blockquote expandable><i>Forward message from Channel/Group or Send CANCEL for cancelling the operation</i></blockquote>", reply_markup=reply_markup, quote=True)
     
     pro = await message.reply("<b><i>Pʀᴏᴄᴇssɪɴɢ....</i></b>", quote=True)
     check=0
@@ -507,7 +507,7 @@ async def manage_ads(client: Client, message: Message):
         await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)
 
 @Bot.on_message(filters.command('ads2') & filters.private & is_admin)
-async def manage_ads(client: Client, message: Message):
+async def manage_second_ads(client: Client, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
 
     try:
