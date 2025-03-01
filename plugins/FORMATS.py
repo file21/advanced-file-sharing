@@ -9,6 +9,8 @@ autodel_cmd_pic = "https://telegra.ph/file/a64533814021b40057ccd.jpg"
 
 ADSINFO_TXT = "<b>🤖 𝗔𝗗𝗦 𝗦𝗘𝗧𝗧𝗜𝗡𝗚𝗦 ⚙️\n\n○ <u>CURRENT ADS</u> :</b>\n\n{}"
 
+SEC_ADSINFO_TXT = "<b>🤖 𝗔𝗗𝗦 𝗦𝗘𝗧𝗧𝗜𝗡𝗚𝗦 2 ⚙️\n\n○ <u>CURRENT ADS</u> :</b>\n\n{}"
+
 #start message
 START_MSG = """<b>Hello {mention},
 

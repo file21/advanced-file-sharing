@@ -26,6 +26,7 @@ class SidDataBase:
         self.rqst_fsub_Channel_data = self.database['request_forcesub_channel']
         self.store_reqLink_data = self.database['store_reqLink']
         self.__ads_data = self.database['ads_information']
+        self.__sec_ads_data = self.database['sec_ads_information']
 
     
     # ADS INFORMATION MANAGEMENT
@@ -42,8 +43,21 @@ class SidDataBase:
                 {'$set': {'ad_text': str_data}},
                 upsert=True  
             )
-
     
+    async def sec_adsinfo(self, str_data: str = None, gett: bool = False, sett: bool = False):
+        if gett:
+            data = await self.__sec_ads_data.find_one({})
+            if data:
+                return data.get('ad_text', None)
+            return None  
+
+        if sett:
+            await self.__sec_ads_data.update_one(
+                {},  # Empty filter matches the document
+                {'$set': {'ad_text': str_data}},
+                upsert=True  
+            )
+
     
     # CHANNEL BUTTON SETTINGS
     async def set_channel_button_link(self, button_name: str, button_link: str):

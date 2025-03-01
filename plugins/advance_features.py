@@ -506,3 +506,20 @@ async def manage_ads(client: Client, message: Message):
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
         await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)
 
+@Bot.on_message(filters.command('ads2') & filters.private & is_admin)
+async def manage_ads(client: Client, message: Message):
+    await message.reply_chat_action(ChatAction.TYPING)
+
+    try:
+        reply_markup = InlineKeyboardMarkup([
+            [InlineKeyboardButton("ADD ADS", "add_sec_ads"), InlineKeyboardButton("DELETE ADS", "del_sec_ads")],
+            [InlineKeyboardButton("🔄 Refresh", "sec_ads_info"), InlineKeyboardButton("Close 🔒", "close")]
+        ])
+
+        sec_textads = client.sec_textads if client.sec_textads else "<b>None</b>"
+
+        await message.reply(SEC_ADSINFO_TXT.format(sec_textads), reply_markup=reply_markup,disable_web_page_preview=True, quote=True)
+
+    except Exception as e:
+        reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔒Close", callback_data = "close")]])
+        await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)

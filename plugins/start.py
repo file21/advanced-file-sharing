@@ -105,9 +105,14 @@ async def start_command(client: Client, message: Message):
         #if AUTO_DEL and last_message:
                 #asyncio.create_task(auto_del_notification(client.username, last_message, DEL_TIMER, message.command[1]))
 
-        textads = client.textads
-        if (len(messages) > 1) and textads:
-            await message.reply(text=textads, disable_web_page_preview=True)
+        textads, sec_textads = client.textads, client.sec_textads
+        
+        if (len(messages) > 1): 
+            if textads:
+                await message.reply(text=textads, disable_web_page_preview=True)
+            
+            if sec_textads:
+                await message.reply(text=sec_textads, disable_web_page_preview=True)
                         
     else:   
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('😊 About Me', callback_data= 'about'), InlineKeyboardButton('🔒Close', callback_data='close')]])

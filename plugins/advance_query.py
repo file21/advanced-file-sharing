@@ -670,8 +670,73 @@ async def cb_handler(client: Bot, query: CallbackQuery):
 
         except Exception as e:
             print(f"Exception in callback data ({data}): {e}")
-        
+
+    elif data == "sec_ads_info":
+        await query.message.edit("<b><i>🔄 Refreshing Data...</i></b>")
+
+        try:
+            reply_markup = InlineKeyboardMarkup([
+                [InlineKeyboardButton("ADD ADS", "add_sec_ads"), InlineKeyboardButton("DELETE ADS", "del_sec_ads")],
+                [InlineKeyboardButton("🔄 Refresh", "sec_ads_info"), InlineKeyboardButton("Close 🔒", "close")]
+            ])
+
+            sec_textads = client.sec_textads if client.sec_textads else "<b>None</b>"
             
+            await query.message.edit(SEC_ADSINFO_TXT.format(sec_textads), reply_markup=reply_markup,disable_web_page_preview=True)
+
+        except Exception as e:
+            print(f"Exception in callback data ({data}): {e}")
+
+    elif data == "add_sec_ads":
+        user_id = query.from_user.id
+
+        try:
+            if await authoUser(query, user_id, owner_only=True) :
+
+                reply_markup = InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton("⬅️ Back", "sec_ads_info"), InlineKeyboardButton("Close 🔒", "close")
+                    ]
+                ])
+
+                await query.message.edit("<b>❖ Please, send the any text message to set as Second Ads</b>")
+
+                temp = await cancelkeyMarkup(query.message)
+                reply_msg = await client.listen(chat_id=user_id, filters=filters.text)
                 
-                    
-                 
+                await temp.delete()
+
+                if reply_msg.text == "CANCEL":
+                    result = "<b>❌ Cancelled...</b>"
+
+                else:
+                    await kingdb.sec_adsinfo(str_data=reply_msg.text.html, sett=True)
+                    await client.update_sec_adsdata()
+
+                    result = "<b><i>Second Ads message Successfully added ✅</i></b>"
+                
+                await reply_msg.delete()
+                await query.message.edit(result, reply_markup=reply_markup)
+            
+        except Exception as e:
+            print(f"Exception in callback data ({data}): {e}")
+
+    elif data == "del_sec_ads":
+        try:
+            if await authoUser(query, query.from_user.id, owner_only=True) :
+                textads = client.textads
+
+                if not textads:
+                    result = "⚠️ No Second Ads data available to delete"
+
+                else:
+                    await kingdb.sec_adsinfo(str_data=None, sett=True)
+                    await client.update_sec_adsdata()
+
+                    result = "✅ Second Ads data deleted successfully"
+
+                await query.answer(result, show_alert=True)
+
+        except Exception as e:
+            print(f"Exception in callback data ({data}): {e}")
+

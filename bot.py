@@ -34,7 +34,7 @@ class Bot(Client):
         self.username = bot_info.username
         self.uptime = datetime.now()
         
-        await self.update_adsdata()
+        await self.update_advertisement_data()
                 
         try:
             db_channel = await self.get_chat(CHANNEL_ID)
@@ -56,7 +56,7 @@ class Bot(Client):
         self.set_parse_mode(ParseMode.HTML)
         self.LOGGER(__name__).info(f"Aᴅᴠᴀɴᴄᴇ Fɪʟᴇ-Sʜᴀʀɪɴɢ ʙᴏᴛV3 Mᴀᴅᴇ Bʏ ➪ @Shidoteshika1 [Tᴇʟᴇɢʀᴀᴍ Usᴇʀɴᴀᴍᴇ]")
         self.LOGGER(__name__).info(f"{self.name} Bot Running..!")
-        self.LOGGER(__name__).info(f"OPERATION SUCCESSFULL ✅")
+        self.LOGGER(__name__).info(f"DEPLOYMENT SUCCESSFUL ✅")
         #web-response
         app = web.AppRunner(await web_server())
         await app.setup()
@@ -65,9 +65,19 @@ class Bot(Client):
 
         try: await self.send_message(OWNER_ID, text = f"<b><blockquote>🤖 Bᴏᴛ Rᴇsᴛᴀʀᴛᴇᴅ ♻️</blockquote></b>")
         except: pass
+    
+    async def update_advertisement_data(self):
+        self.LOGGER(__name__).info(f"Adding Advertisement data locally...")
+        await self.update_adsdata()
+        await self.update_sec_adsdata()
+        self.LOGGER(__name__).info(f"Successfully added.")
+        
 
     async def update_adsdata(self):
         self.textads = await kingdb.adsinfo(gett=True)
+    
+    async def update_sec_adsdata(self):
+        self.sec_textads = await kingdb.sec_adsinfo(gett=True)
 
     async def stop(self, *args):
         await super().stop()
