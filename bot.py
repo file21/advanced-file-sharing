@@ -74,10 +74,10 @@ class Bot(Client):
         
 
     async def update_adsdata(self):
-        self.textads = await kingdb.adsinfo(gett=True)
+        self.text_ads = await kingdb.adsinfo(gett=True)
     
     async def update_sec_adsdata(self):
-        self.sec_textads = await kingdb.sec_adsinfo(gett=True)
+        self.sec_text_ads = await kingdb.sec_adsinfo(gett=True)
 
     async def stop(self, *args):
         await super().stop()

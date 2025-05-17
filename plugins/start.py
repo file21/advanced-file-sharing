@@ -18,6 +18,13 @@ from helper_func import banUser, is_userJoin, is_admin, subscribed, encode, deco
 
 CHNL_BTN = True
 
+"""async def pin_sticker(message: Message) -> None :
+    if message:
+        try:
+            await message.pin(disable_notification=True, both_sides=True)
+        except: 
+            print("Unable to pin Sticker Message, Reason:", e)""" 
+
 @Bot.on_message(filters.command('start') & filters.private & ~banUser & subscribed)
 async def start_command(client: Client, message: Message): 
     await message.reply_chat_action(ChatAction.CHOOSE_STICKER)
@@ -68,8 +75,13 @@ async def start_command(client: Client, message: Message):
         #AUTO_DEL, DEL_TIMER, HIDE_CAPTION, CHNL_BTN, PROTECT_MODE = await asyncio.gather(kingdb.get_auto_delete(), kingdb.get_del_timer(), kingdb.get_hide_caption(), kingdb.get_channel_button(), kingdb.get_protect_content())   
         #if CHNL_BTN: button_name, button_link = await kingdb.get_channel_button_link()
 
-            
+        first_sticker_msg = None
+        
         for idx, msg in enumerate(messages):
+            
+            if idx == 0 and msg.sticker : 
+                first_sticker_msg = msg
+
             if bool(CUSTOM_CAPTION) & bool(msg.document):
                 caption = CUSTOM_CAPTION.format(previouscaption = "" if not msg.caption else msg.caption.html, filename = msg.document.file_name)
 
@@ -104,16 +116,23 @@ async def start_command(client: Client, message: Message):
                         
         #if AUTO_DEL and last_message:
                 #asyncio.create_task(auto_del_notification(client.username, last_message, DEL_TIMER, message.command[1]))
-
-        textads, sec_textads = client.textads, client.sec_textads
         
-        if (len(messages) > 1): 
-            if textads:
-                await message.reply(text=textads, disable_web_page_preview=True)
+        if (len(messages) > 1):
             
-            if sec_textads:
-                await message.reply(text=sec_textads, disable_web_page_preview=True)
-                        
+            if first_sticker_msg:
+                try: await first_sticker_msg.pin(disable_notification=True, both_sides=True)
+                except Exception as e: print("Unable to pin Sticker Message, Reason:", e)
+            
+            text_ads = client.text_ads
+            sec_text_ads =  client.sec_text_ads
+
+            if text_ads:
+                await message.reply(text=text_ads, disable_web_page_preview=True)
+            
+            if sec_text_ads:
+                await message.reply(text=sec_text_ads, disable_web_page_preview=True)
+
+
     else:   
         reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('😊 About Me', callback_data= 'about'), InlineKeyboardButton('🔒Close', callback_data='close')]])
 
@@ -127,7 +146,7 @@ async def start_command(client: Client, message: Message):
                 id = message.from_user.id
             ),
             reply_markup = reply_markup,
-	        message_effect_id=5104841245755180586 #🔥
+            message_effect_id=5104841245755180586 #🔥
         )
         #try: await message.delete()
         #except: pass
