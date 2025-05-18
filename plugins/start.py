@@ -28,10 +28,10 @@ CHNL_BTN = True
 @Bot.on_message(filters.command('start') & filters.private & ~banUser & subscribed)
 async def start_command(client: Client, message: Message): 
     await message.reply_chat_action(ChatAction.CHOOSE_STICKER)
-    id = message.from_user.id  
+    user_id = message.from_user.id  
     
-    if not await kingdb.present_user(id):
-        try: await kingdb.add_user(id)
+    if not await kingdb.present_user(user_id):
+        try: await kingdb.add_user(user_id)
         except: pass
                 
     text = message.text        
@@ -75,12 +75,9 @@ async def start_command(client: Client, message: Message):
         #AUTO_DEL, DEL_TIMER, HIDE_CAPTION, CHNL_BTN, PROTECT_MODE = await asyncio.gather(kingdb.get_auto_delete(), kingdb.get_del_timer(), kingdb.get_hide_caption(), kingdb.get_channel_button(), kingdb.get_protect_content())   
         #if CHNL_BTN: button_name, button_link = await kingdb.get_channel_button_link()
 
-        first_sticker_msg = None
+        first_sticker_msg_id = None
         
         for idx, msg in enumerate(messages):
-            
-            if idx == 0 and msg.sticker : 
-                first_sticker_msg = msg
 
             if bool(CUSTOM_CAPTION) & bool(msg.document):
                 caption = CUSTOM_CAPTION.format(previouscaption = "" if not msg.caption else msg.caption.html, filename = msg.document.file_name)
@@ -98,7 +95,7 @@ async def start_command(client: Client, message: Message):
                 reply_markup = msg.reply_markup   
                     
             try:
-                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
+                copied_msg = await msg.copy(chat_id=user_id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
                 await asyncio.sleep(0.1)
 
                 #if AUTO_DEL:
@@ -107,21 +104,31 @@ async def start_command(client: Client, message: Message):
 
             except FloodWait as e:
                 await asyncio.sleep(e.x)
-                copied_msg = await msg.copy(chat_id=id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
+                copied_msg = await msg.copy(chat_id=user_id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup)#, protect_content=PROTECT_MODE)
                 await asyncio.sleep(0.1)
                 
                 #if AUTO_DEL:
                     #asyncio.create_task(delete_message(copied_msg, DEL_TIMER))
                     #if idx == len(messages) - 1: last_message = copied_msg
+            
+            if idx == 0 and copied_msg.sticker : 
+                first_sticker_msg_id = copied_msg.id
                         
         #if AUTO_DEL and last_message:
                 #asyncio.create_task(auto_del_notification(client.username, last_message, DEL_TIMER, message.command[1]))
         
         if (len(messages) > 1):
             
-            if first_sticker_msg:
-                try: await first_sticker_msg.pin(disable_notification=True, both_sides=True)
-                except Exception as e: print("Unable to pin Sticker Message, Reason:", e)
+            if first_sticker_msg_id:
+                try: 
+                    await client.pin_chat_message(
+                        chat_id=user_id,
+                        message_id=first_sticker_msg_id,
+                        disable_notification=True,
+                        both_sides=True
+                    )
+                except Exception as e: 
+                    print("Unable to pin Sticker Message, Reason:", e)
             
             text_ads = client.text_ads
             sec_text_ads =  client.sec_text_ads
