@@ -489,7 +489,7 @@ async def handle_reqFsub(client: Client, message: Message):
 
 
 @Bot.on_message(filters.command('ads') & filters.private & is_admin)
-async def manage_ads(client: Client, message: Message):
+async def manage_ads(client: Bot, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
 
     try:
@@ -498,7 +498,7 @@ async def manage_ads(client: Client, message: Message):
             [InlineKeyboardButton("🔄 Refresh", "ads_info"), InlineKeyboardButton("Close 🔒", "close")]
         ])
 
-        textads = client.textads if client.textads else "<b>None</b>"
+        textads = client.text_ads if client.text_ads else "<b>None</b>"
 
         await message.reply(ADSINFO_TXT.format(textads), reply_markup=reply_markup,disable_web_page_preview=True, quote=True)
 
@@ -507,7 +507,7 @@ async def manage_ads(client: Client, message: Message):
         await message.reply(f"<b>! Eʀʀᴏʀ Oᴄᴄᴜʀᴇᴅ..\n<blockquote>Rᴇᴀsᴏɴ:</b> {e}</blockquote><b><i>Cᴏɴᴛᴀɴᴄᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀ: @Shidoteshika1</i></b>", reply_markup=reply_markup)
 
 @Bot.on_message(filters.command('ads2') & filters.private & is_admin)
-async def manage_second_ads(client: Client, message: Message):
+async def manage_second_ads(client: Bot, message: Message):
     await message.reply_chat_action(ChatAction.TYPING)
 
     try:
@@ -516,7 +516,7 @@ async def manage_second_ads(client: Client, message: Message):
             [InlineKeyboardButton("🔄 Refresh", "sec_ads_info"), InlineKeyboardButton("Close 🔒", "close")]
         ])
 
-        sec_textads = client.sec_textads if client.sec_textads else "<b>None</b>"
+        sec_textads = client.sec_text_ads if client.sec_text_ads else "<b>None</b>"
 
         await message.reply(SEC_ADSINFO_TXT.format(sec_textads), reply_markup=reply_markup,disable_web_page_preview=True, quote=True)
 
